@@ -1,0 +1,17 @@
+# Helper to package up the spray-swagger to install as a local-repository in our git system
+# Steps:
+# - sbt publishLocal - This will install the artifact in .ivy2
+# - cd to the spray-swagger directory under .ivy2 directory local/com/gettyimages/
+# - Change the file in the poms directory to pom.xml
+# - Run this maven-install script to produce the equivalent repository information as a Maven repository
+# - cd to the directory under .m2
+# - tar up the contents
+# - Untar in the local-repository under git in the bp-orchestrate-core repo
+# It will look like:
+# gettyimages/spray-swagger_2.10/0.4.0-CYAN/_maven.repositories
+# gettyimages/spray-swagger_2.10/0.4.0-CYAN/spray-swagger_2.10-0.4.0-CYAN.jar
+# gettyimages/spray-swagger_2.10/0.4.0-CYAN/spray-swagger_2.10-0.4.0-CYAN.pom
+# gettyimages/spray-swagger_2.10/maven-metadata-local.xml
+
+echo "Installing spray-swagger" in local maven repository...
+mvn install:install-file -DgroupId=com.gettyimages -DartifactId=spray-swagger_2.10 -Dfile=./jars/spray-swagger_2.10.jar -DpomFile=./poms/pom.xml
